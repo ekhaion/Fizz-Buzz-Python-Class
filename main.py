@@ -1,52 +1,68 @@
-from math import ceil
+import os
+from typing import Tuple
+
 import typer
 
+user = os.environ["USER"]
+NUMBERS_FIZZ_BUZZ = [3, 5, 6, 7]
+
 app = typer.Typer()
+typer.secho(f"\t Hello {user} ! ", bg=typer.colors.WHITE, fg=typer.colors.RED)
 
 
 @app.command("FizzBuzz")
-def main(displayed_word: str = "fizzbuzz", numbers_to_divide: int = 15):
-    fb = FizzBuzz(displayed_word, numbers_to_divide)
-    fb.loop_on_numbers_to_divide()
+def main(displayed_word: str = typer.Argument("fizzbuzz", help="String to display"),
+         numbers_to_divide: int = typer.Argument(60, help="number to loop in."),
+         numbers_fizzbuzz: Tuple[int, int, int] = typer.Argument((3, 5, 7), help="3 dividers.")):
+    """
+    Found dividers of a number with three arguments
+    :param displayed_word: str
+    :param numbers_to_divide: int
+    :param numbers_fizzbuzz: Tuple
+    :return: FizzBuzz()
+    :version : python 3.10
+    """
+    fb = FizzBuzz(displayed_word, numbers_to_divide, numbers_fizzbuzz)
+    fb.display_fizzbuzz()
     return fb
 
 
-def _is_modulo_5_equal_0(_: int) -> bool:
-    return _ % 5 == 0
-
-
-def _is_modulo_3_equal_0(_: int) -> bool:
-    return _ % 3 == 0
-
-
 class FizzBuzz:
-    def __init__(self, fizzbuzz: str, numbers_to_divide: int):
+    def __init__(self, fizzbuzz: str, numbers_to_divide: int, numbers_fizzbuzz: Tuple):
         self.fizzbuzz = fizzbuzz
         self.numbers_to_divide = numbers_to_divide
+        self.numbers_fizzbuzz = numbers_fizzbuzz
+        self.dividers = []
+        self.dividend = []
 
     def __str__(self) -> str:
-        cut_in_half = ceil(len(self.fizzbuzz) / 2)
-        return f" {self.fizzbuzz[:cut_in_half]} {self.fizzbuzz[cut_in_half:]}".title()
+        numbers_to_divide = typer.style(self.numbers_to_divide, fg=typer.colors.CYAN)
+        return typer.style(
+            f"\t{self.fizzbuzz.capitalize()} -> {numbers_to_divide} is divisible by : ", fg=typer.colors.MAGENTA
+        )
 
-    def _display_word(self, _: int):
-        fizz_or_buzz = self.__str__().split(" ", 2)
-        if _is_modulo_3_equal_0(_) and _is_modulo_5_equal_0(_):
-            typer.secho(self.__str__(), fg=typer.colors.MAGENTA)
-        elif _is_modulo_3_equal_0(_):
-            typer.secho(f" {fizz_or_buzz[1]}", fg=typer.colors.RED)
-        elif _is_modulo_5_equal_0(_):
-            typer.secho(f" {fizz_or_buzz[2]}", fg=typer.colors.BLUE)
-        else:
-            typer.secho(f" {_}", fg=typer.colors.WHITE)
+    def _try_modulo(self, numbers_to_divide: int):
+        for _ in self.numbers_fizzbuzz:
+            if numbers_to_divide % _ == 0:
+                self._fill_lists(self.numbers_to_divide)
 
-    def loop_on_numbers_to_divide(self) -> bool:
-        with typer.progressbar(range(1, self.numbers_to_divide + 1)) as progress:
-            for _ in progress:
-                self._display_word(_)
-            return True
+    def _fill_lists(self, numbers_to_divide: int):
+        for _ in self.numbers_fizzbuzz:
+            if numbers_to_divide % _ == 0 and _ not in self.dividers:
+                self.dividers.append(_)
+                self.dividend.append(numbers_to_divide)
+
+    def display_fizzbuzz(self):
+        with typer.progressbar(range(1, self.numbers_to_divide + 1), length=self.numbers_to_divide) as progress:
+            for self.numbers_to_divide in progress:
+                self._try_modulo(self.numbers_to_divide)
+                if self.numbers_to_divide in self.dividend:
+                    typer.secho(f"{self.__str__()}{typer.style(self.dividers, fg=typer.colors.CYAN)}")
+                self.dividers = []
+                if self.numbers_to_divide not in self.dividend:
+                    typer.secho(f"\t{self.numbers_to_divide}", fg=typer.colors.WHITE)
+            print("\tDone !", end="")
 
 
 if __name__ == '__main__':
     app()
-
-# command line -> python3.10 [file_name.py] [str(fizzbuzz)] [int(iterations)]
