@@ -34,6 +34,7 @@ class FizzBuzz:
         self.numbers_fizzbuzz = numbers_fizzbuzz
         self.dividers = []
         self.dividend = []
+        self.dict_values = {}
 
     def __str__(self) -> str:
         numbers_to_divide = typer.style(self.numbers_to_divide, fg=typer.colors.CYAN)
@@ -51,6 +52,7 @@ class FizzBuzz:
             if numbers_to_divide % _ == 0 and _ not in self.dividers:
                 self.dividers.append(_)
                 self.dividend.append(numbers_to_divide)
+                self.dict_values[numbers_to_divide] = self.dividers
 
     def display_fizzbuzz(self):
         with typer.progressbar(range(1, self.numbers_to_divide + 1), length=self.numbers_to_divide) as progress:
@@ -61,7 +63,9 @@ class FizzBuzz:
                 self.dividers = []
                 if self.numbers_to_divide not in self.dividend:
                     typer.secho(f"\t{self.numbers_to_divide}", fg=typer.colors.WHITE)
-            print("\tDone !", end="")
+            print("\tDone !")
+            for cle, valeur in self.dict_values.items():
+                print(f" {cle} : {valeur}")
 
 
 if __name__ == '__main__':
