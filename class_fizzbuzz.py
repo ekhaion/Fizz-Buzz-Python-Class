@@ -17,12 +17,12 @@ class FizzBuzz:
             f"\t{self.fizzbuzz.capitalize()} -> {numbers_to_divide} is divisible by : ", fg=typer.colors.MAGENTA
         )
 
-    def _try_modulo(self, numbers_to_divide: int):
+    def __try_modulo(self, numbers_to_divide: int):
         for _ in self.numbers_fizzbuzz:
             if numbers_to_divide % _ == 0:
-                self._fill_lists(self.numbers_to_divide)
+                self.__fill_lists(self.numbers_to_divide)
 
-    def _fill_lists(self, numbers_to_divide: int):
+    def __fill_lists(self, numbers_to_divide: int):
         for _ in self.numbers_fizzbuzz:
             if numbers_to_divide % _ == 0 and _ not in self.dividers:
                 self.dividers.append(_)
@@ -32,19 +32,19 @@ class FizzBuzz:
     def progress_bar(self):
         with typer.progressbar(range(1, self.numbers_to_divide + 1), length=self.numbers_to_divide) as progress:
             for self.numbers_to_divide in progress:
-                self._display_fizzbuzz()
+                self.__display_fizzbuzz()
             print("\tDone !")
-            self._display_dictionary()
+            self.__display_dictionary()
 
-    def _display_fizzbuzz(self):
-        self._try_modulo(self.numbers_to_divide)
+    def __display_fizzbuzz(self):
+        self.__try_modulo(self.numbers_to_divide)
         if self.numbers_to_divide in self.dividend:
             typer.secho(f"{self.__str__()}{typer.style(self.dividers, fg=typer.colors.CYAN)}")
         self.dividers = []
         if self.numbers_to_divide not in self.dividend:
             typer.secho(f"\t{self.numbers_to_divide}", fg=typer.colors.WHITE)
 
-    def _display_dictionary(self):
+    def __display_dictionary(self):
         list_values = []
         for cle, valeur in self.dict_values.items():
             list_values.append(cle)
