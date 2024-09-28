@@ -12,13 +12,14 @@ Else default values are fizzbuzz 3 5 7
  Found dividers of a number with three arguments :param displayed_word: str :param numbers_to_divide: int :param numbers_fizzbuzz: Tuple :return:  
  FizzBuzz() :version : python 3.10                                                                                                                 
                                                                                                                                                    
-╭─ Arguments ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│   displayed_word         [DISPLAYED_WORD]       String to display [default: fizzbuzz]                                                           │
-│   numbers_to_divide      [NUMBERS_TO_DIVIDE]    number to loop in. [default: 105]                                                               │
-│   numbers_fizzbuzz       [NUMBERS_FIZZBUZZ]...  3 dividers. [default: 3, 5, 7]                                                                  │
-╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-╭─ Options ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ --install-completion          Install completion for the current shell.                                                                         │
-│ --show-completion             Show completion for the current shell, to copy it or customize the installation.                                  │
-│ --help                        Show this message and exit.                                                                                       │
-╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+``╭─ Arguments ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+  │   displayed_word         [DISPLAYED_WORD]       String to display [default: fizzbuzz]                                                           │
+  │   numbers_to_divide      [NUMBERS_TO_DIVIDE]    number to loop in. [default: 105]                                                               │
+  │   numbers_fizzbuzz       [NUMBERS_FIZZBUZZ]...  3 dividers. [default: 3, 5, 7]                                                                  │
+  ╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+  ╭─ Options ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+  │ --install-completion          Install completion for the current shell.                                                                         │
+  │ --show-completion             Show completion for the current shell, to copy it or customize the installation.                                  │
+  │ --help                        Show this message and exit.                                                                                       │
+  ╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+``
